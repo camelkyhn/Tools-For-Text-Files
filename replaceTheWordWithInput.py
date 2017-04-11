@@ -11,11 +11,10 @@ def putSpaceBeforeAndAfterPunctuation(content):
         index = 0
         while index<len(content):
             if i == content[index]:
-                content = content[:(index)] + ' ' + content[(index):]
-                content = content[:(index+2)] + ' ' + content[(index+2):]
-                index = index + 2
+                content = content[:(index)] + ' ' + i + ' ' + content[(index+1):]
+                index+=2
             else:
-                index +=1
+                index+=1
     return content
 
 #Returns a list not a string
@@ -43,6 +42,15 @@ def removeSpaceBeforeComma(content):
         index +=1
     return content
 
+def removeExtraSpaces(content):
+    for i in punctuation:
+        index = 0
+        while(index<len(content)):
+            if i == content[index]:
+                content = content[:(index-1)] + i + content[(index+2):]
+            index+=1
+    return content
+
 if __name__ == '__main__':
     print('Enter the "WORD" you want to replace with!')
     wantToReplaceWith = input()
@@ -52,5 +60,5 @@ if __name__ == '__main__':
     contentWithPunctuation = putSpaceBeforeAndAfterPunctuation(content)
     contentList = splitWords(contentWithPunctuation)
     newContent = replaceWordWithInput(wantToReplaceWith, willBeReplaced, contentList)
-    finalContent = removeSpaceBeforeComma(convertListToString(newContent))
+    finalContent = removeExtraSpaces(convertListToString(newContent))
     print(finalContent)
